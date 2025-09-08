@@ -3,7 +3,7 @@
 /**
  * Разбивает массив на два подмассива по предикату
  * @param {Array} arr Массив элементов для разделения
- * @param {function(Number): boolean} predicate
+ * @param {function(*): boolean} predicate
  *        Функция-предикат, принимающая элемент массива и
  *        возвращающая логическое значение (`true`/`false`)
  *
@@ -19,7 +19,7 @@ const partition = (arr, predicate) => {
     if (typeof predicate !== 'function') throw new TypeError('Expected second argument to be a Function');
     return arr.reduce(
         (acc, item) => {
-            if (typeof item !== 'number' || Number.isNaN(item)) throw new TypeError('Unexpected element type');
+            if ((typeof item === 'number' && Number.isNaN(item)) || !item) throw new TypeError('Unexpected element type');
             (predicate(item) ? acc[0] : acc[1]).push(item);
             return acc;
         },
